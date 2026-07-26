@@ -104,7 +104,9 @@ Optimize performance only where it matters or where evidence shows a meaningful 
 - Do not silently substitute behavior, discard information, repair invalid data, or reduce functionality.
 - Any necessary fallback must be deliberate, observable, documented, and testable.
 - Favor established open standards and interoperable formats for user-facing data, protocols, persistence, and integration boundaries.
-- Prefer proven libraries, protocols, platform facilities, and existing solutions when they meet the requirements.
+- Prefer proven libraries, protocols, platform facilities, and existing solutions when they meet the requirements without unnecessarily limiting capabilities or future flexibility.
+- When choosing a library, evaluate not only convenience but also the control, extensibility, constraints, and long-term dependency it introduces.
+- Implement functionality directly when available libraries would materially restrict required behavior or control and the additional ownership and maintenance cost is justified.
 - Create custom alternatives only for a concrete and documented reason.
 - Keep custom representations internal when possible.
 - Treat every officially supported environment and platform as a primary target when designing shared behavior.
