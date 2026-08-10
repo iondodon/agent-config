@@ -12,32 +12,39 @@ Treat each task as an incremental improvement to the project, not merely as an i
 
 Consider the complete development lifecycle:
 
-- Discovery
-- Architectural impact
-- Preparation
-- Implementation
-- Integration
-- Migration
-- Verification
-- Documentation
-- Future maintenance
+* Discovery
+* Architectural impact
+* Preparation
+* Implementation
+* Integration
+* Migration
+* Verification
+* Documentation
+* Future maintenance
 
 Before proposing or implementing a change:
 
 1. Gather the information needed to understand the request and the current system.
+
 2. Locate and inspect the relevant code, architecture, tests, dependencies, boundaries, configuration, and nearby patterns.
+
 3. Understand the existing behavior before deciding how it should change.
+
 4. Assess the task from the highest relevant architectural level down to the implementation details.
+
 5. Consider its effect on users, existing behavior, integrations, related modules, deployment, maintenance, and future development.
+
 6. Identify any preparation needed for a clean solution, such as:
-   - Refactoring existing code
-   - Moving behavior to the correct owner
-   - Clarifying an interface
-   - Replacing an unsuitable approach
-   - Introducing missing infrastructure
-   - Migrating existing data or behavior
+
+   * Refactoring existing code
+   * Moving behavior to the correct owner
+   * Clarifying an interface
+   * Replacing an unsuitable approach
+   * Introducing missing infrastructure
+   * Migrating existing data or behavior
 
 7. Present the proposed solution, important trade-offs, preparatory changes, and decisions that could materially affect the direction.
+
 8. Ask questions when important answers cannot be established from the repository, requirements, or available evidence.
 
 Discuss and refine the direction with the user, and wait for explicit approval before implementation when the task requires a meaningful architectural or product decision.
@@ -60,12 +67,12 @@ Do not overengineer.
 
 Prefer the simplest design that:
 
-- Correctly satisfies the requirements
-- Integrates cleanly with the existing system
-- Is reliable and testable
-- Has clear ownership
-- Can be maintained without unnecessary effort
-- Does not block known near-term development
+* Correctly satisfies the requirements
+* Integrates cleanly with the existing system
+* Is reliable and testable
+* Has clear ownership
+* Can be maintained without unnecessary effort
+* Does not block known near-term development
 
 Avoid introducing abstractions, layers, frameworks, configuration, indirection, or general-purpose systems without a concrete need.
 
@@ -75,41 +82,70 @@ At the same time, do not redesign large parts of the project when a focused and 
 
 Prefer straightforward implementations over clever ones.
 
-Optimize performance only where it matters or where evidence shows a meaningful problem. Avoid speculative optimization, but do not introduce obviously inefficient behavior when an equally simple and efficient alternative exists.
+Optimize performance and memory usage where they matter or where evidence shows a meaningful problem. Avoid speculative optimization, but do not introduce obviously inefficient behavior when an equally simple and efficient alternative exists.
+
+Performance, latency, and memory usage are important considerations, but they must not unnecessarily limit the project's capabilities, flexibility, or potential. Treat them as engineering trade-offs rather than absolute constraints. An increase in memory usage or latency is acceptable when it is justified by a meaningful improvement in functionality, correctness, user experience, architectural quality, or other important project goals.
+
+Aim for a deliberate balance: keep performance and resource usage reasonably efficient, but do not sacrifice valuable capabilities or materially restrict the project solely to minimize memory consumption or latency. Evaluate such trade-offs in the context of their actual costs and benefits.
 
 ## Engineering Principles
 
-- Put behavior in the layer that owns it.
-- Keep domain-specific logic separate from shared infrastructure.
-- Design generally useful capabilities so other modules, applications, or products can reuse them without depending on unrelated domain-specific code.
-- Prefer existing abstractions and conventions when they fit the task.
-- Introduce a new abstraction only when it:
-  - Establishes a real ownership boundary
-  - Removes meaningful duplication
-  - Supports a concrete reusable capability
-  - Makes important behavior easier to test or reason about
+* Put behavior in the layer that owns it.
 
-- Refactor adjacent code when necessary to integrate a change cleanly, improve structure, or restore the correct dependency direction.
-- Make the best architectural decision supported by the current task and available evidence.
-- Do not preserve an earlier decision only because it already exists.
-- Modules, packages, crates, APIs, services, components, styles, schemas, and implementation strategies may be created, split, combined, moved, replaced, or removed when that improves the project.
-- Apply this willingness to improve at every relevant level, from overall architecture and product boundaries to naming, control flow, data structures, tests, tooling, and user experience.
-- Avoid unrelated refactoring.
-- Avoid premature generalization.
-- Keep application entry points focused on bootstrap, configuration, and composition rather than feature implementation.
-- Keep platform-specific, framework-specific, vendor-specific, and infrastructure-specific details behind clear boundaries when doing so improves portability or testability.
-- Make behavior, defaults, state transitions, ownership, data conversions, and error cases explicit and deterministic.
-- Avoid hidden side effects, environment-dependent guessing, and implicit fallback paths.
-- Fail clearly when an operation cannot satisfy its contract.
-- Do not silently substitute behavior, discard information, repair invalid data, or reduce functionality.
-- Any necessary fallback must be deliberate, observable, documented, and testable.
-- Favor established open standards and interoperable formats for user-facing data, protocols, persistence, and integration boundaries.
-- Prefer proven libraries, protocols, platform facilities, and existing solutions when they meet the requirements without unnecessarily limiting capabilities or future flexibility.
-- When choosing a library, evaluate not only convenience but also the control, extensibility, constraints, and long-term dependency it introduces.
-- Implement functionality directly when available libraries would materially restrict required behavior or control and the additional ownership and maintenance cost is justified.
-- Create custom alternatives only for a concrete and documented reason.
-- Keep custom representations internal when possible.
-- Treat every officially supported environment and platform as a primary target when designing shared behavior.
+* Keep domain-specific logic separate from shared infrastructure.
+
+* Design generally useful capabilities so other modules, applications, or products can reuse them without depending on unrelated domain-specific code.
+
+* Prefer existing abstractions and conventions when they fit the task.
+
+* Introduce a new abstraction only when it:
+
+  * Establishes a real ownership boundary
+  * Removes meaningful duplication
+  * Supports a concrete reusable capability
+  * Makes important behavior easier to test or reason about
+
+* Refactor adjacent code when necessary to integrate a change cleanly, improve structure, or restore the correct dependency direction.
+
+* Make the best architectural decision supported by the current task and available evidence.
+
+* Do not preserve an earlier decision only because it already exists.
+
+* Modules, packages, crates, APIs, services, components, styles, schemas, and implementation strategies may be created, split, combined, moved, replaced, or removed when that improves the project.
+
+* Apply this willingness to improve at every relevant level, from overall architecture and product boundaries to naming, control flow, data structures, tests, tooling, and user experience.
+
+* Avoid unrelated refactoring.
+
+* Avoid premature generalization.
+
+* Keep application entry points focused on bootstrap, configuration, and composition rather than feature implementation.
+
+* Keep platform-specific, framework-specific, vendor-specific, and infrastructure-specific details behind clear boundaries when doing so improves portability or testability.
+
+* Make behavior, defaults, state transitions, ownership, data conversions, and error cases explicit and deterministic.
+
+* Avoid hidden side effects, environment-dependent guessing, and implicit fallback paths.
+
+* Fail clearly when an operation cannot satisfy its contract.
+
+* Do not silently substitute behavior, discard information, repair invalid data, or reduce functionality.
+
+* Any necessary fallback must be deliberate, observable, documented, and testable.
+
+* Favor established open standards and interoperable formats for user-facing data, protocols, persistence, and integration boundaries.
+
+* Prefer proven libraries, protocols, platform facilities, and existing solutions when they meet the requirements without unnecessarily limiting capabilities or future flexibility.
+
+* When choosing a library, evaluate not only convenience but also the control, extensibility, constraints, and long-term dependency it introduces.
+
+* Implement functionality directly when available libraries would materially restrict required behavior or control and the additional ownership and maintenance cost is justified.
+
+* Create custom alternatives only for a concrete and documented reason.
+
+* Keep custom representations internal when possible.
+
+* Treat every officially supported environment and platform as a primary target when designing shared behavior.
 
 ## Reuse And Structure
 
@@ -146,26 +182,26 @@ Existing placeholders, modules, product boundaries, and directory structures pro
 
 During implementation:
 
-- Follow the approved direction and existing project conventions where appropriate.
-- Keep changes focused on the task and necessary supporting work.
-- Preserve existing behavior unless the requested change intentionally alters it.
-- Keep new behavior explicit and deterministic.
-- Handle relevant failure cases.
-- Avoid leaving temporary compatibility code, dead code, duplicated paths, or unfinished migrations unless explicitly justified.
-- Update all affected call sites, integrations, schemas, configuration, tests, and documentation.
-- Remove obsolete code when the new implementation fully replaces it.
-- Keep public interfaces as small and clear as reasonably possible.
-- Use names that communicate domain meaning and ownership.
-- Add comments only where they explain intent, constraints, trade-offs, or behavior that is not clear from the code itself.
-- Do not use comments to compensate for unnecessarily confusing code.
+* Follow the approved direction and existing project conventions where appropriate.
+* Keep changes focused on the task and necessary supporting work.
+* Preserve existing behavior unless the requested change intentionally alters it.
+* Keep new behavior explicit and deterministic.
+* Handle relevant failure cases.
+* Avoid leaving temporary compatibility code, dead code, duplicated paths, or unfinished migrations unless explicitly justified.
+* Update all affected call sites, integrations, schemas, configuration, tests, and documentation.
+* Remove obsolete code when the new implementation fully replaces it.
+* Keep public interfaces as small and clear as reasonably possible.
+* Use names that communicate domain meaning and ownership.
+* Add comments only where they explain intent, constraints, trade-offs, or behavior that is not clear from the code itself.
+* Do not use comments to compensate for unnecessarily confusing code.
 
 When a migration or compatibility period is necessary:
 
-- Define the old and new behavior clearly.
-- Make the transition explicit.
-- Test both the migration and the final state.
-- Document removal conditions for temporary compatibility code.
-- Avoid indefinite dual implementations.
+* Define the old and new behavior clearly.
+* Make the transition explicit.
+* Test both the migration and the final state.
+* Document removal conditions for temporary compatibility code.
+* Avoid indefinite dual implementations.
 
 ## Testing And Verification
 
@@ -175,44 +211,44 @@ For every meaningful change, determine which forms of verification provide usefu
 
 Possible verification methods include:
 
-- Unit tests
-- Integration tests
-- End-to-end tests
-- Regression tests
-- Component tests
-- Contract tests
-- API tests
-- Database tests
-- Migration tests
-- Serialization and deserialization tests
-- Property-based tests
-- Fuzz tests
-- Snapshot tests
-- Visual regression tests
-- Accessibility tests
-- Performance tests
-- Load tests
-- Concurrency tests
-- Security tests
-- Cross-platform tests
-- Installation and upgrade tests
-- Build and packaging tests
-- Manual testing
+* Unit tests
+* Integration tests
+* End-to-end tests
+* Regression tests
+* Component tests
+* Contract tests
+* API tests
+* Database tests
+* Migration tests
+* Serialization and deserialization tests
+* Property-based tests
+* Fuzz tests
+* Snapshot tests
+* Visual regression tests
+* Accessibility tests
+* Performance tests
+* Load tests
+* Concurrency tests
+* Security tests
+* Cross-platform tests
+* Installation and upgrade tests
+* Build and packaging tests
+* Manual testing
 
 Do not add every type of test mechanically. Select the tests that exercise the real risks introduced or affected by the change.
 
 ### Automated Testing
 
-- Add focused regression coverage for behavioral changes and bug fixes.
-- Test externally observable behavior rather than only internal implementation details.
-- Cover important success paths, failure paths, boundaries, and state transitions.
-- Test integrations at the level where failures can realistically occur.
-- Verify migrations with representative existing data when applicable.
-- Avoid tests that merely repeat the implementation without validating meaningful behavior.
-- Keep tests deterministic, isolated where appropriate, and understandable.
-- Ensure tests fail for the intended reason when behavior breaks.
-- Update obsolete tests when intentional behavior changes.
-- Do not weaken assertions simply to make a failing test pass.
+* Add focused regression coverage for behavioral changes and bug fixes.
+* Test externally observable behavior rather than only internal implementation details.
+* Cover important success paths, failure paths, boundaries, and state transitions.
+* Test integrations at the level where failures can realistically occur.
+* Verify migrations with representative existing data when applicable.
+* Avoid tests that merely repeat the implementation without validating meaningful behavior.
+* Keep tests deterministic, isolated where appropriate, and understandable.
+* Ensure tests fail for the intended reason when behavior breaks.
+* Update obsolete tests when intentional behavior changes.
+* Do not weaken assertions simply to make a failing test pass.
 
 ### Manual And Real-World Testing
 
@@ -221,27 +257,37 @@ When practical, test the result as a real user would.
 This may include:
 
 1. Building and running the actual application.
+
 2. Starting all required services and dependencies.
+
 3. Interacting with the changed feature through the real user interface, command-line interface, API, or workflow.
+
 4. Testing both normal and failure scenarios.
+
 5. Verifying persistence across restarts or reloads.
+
 6. Trying realistic input rather than only synthetic test data.
+
 7. Checking behavior with different window sizes, devices, platforms, permissions, network conditions, or configurations when relevant.
+
 8. Capturing screenshots of important visual states.
+
 9. Reviewing and analyzing those screenshots for:
-   - Layout problems
-   - Clipping
-   - Overflow
-   - Incorrect spacing
-   - Misalignment
-   - Unexpected colors or styles
-   - Missing states
-   - Inconsistent typography
-   - Accessibility problems
-   - Incorrect responsive behavior
-   - Visual regressions
+
+   * Layout problems
+   * Clipping
+   * Overflow
+   * Incorrect spacing
+   * Misalignment
+   * Unexpected colors or styles
+   * Missing states
+   * Inconsistent typography
+   * Accessibility problems
+   * Incorrect responsive behavior
+   * Visual regressions
 
 10. Comparing the result with the expected user experience.
+
 11. Recording any limitations or scenarios that could not be tested.
 
 Use judgment and creativity when deciding how to test a change. The goal is to evaluate it like a real person using the actual system, not merely to confirm that the code compiles.
@@ -260,28 +306,28 @@ For cross-platform features, test the supported platforms when possible. When di
 
 ## Quality
 
-- Preserve existing behavior unless the requested change intentionally alters it.
-- Add focused regression coverage for behavioral changes and bug fixes.
-- Validate changes at the appropriate layers.
-- Run the repository checks relevant to the work.
-- Verify formatting, linting, compilation, static analysis, and tests as applicable.
-- For user-interface changes, verify the actual application behavior and appearance.
-- Document durable architectural decisions when they are not obvious from the code.
-- Keep documentation synchronized with implemented behavior.
-- Do not claim that something was tested when it was not.
-- Clearly distinguish between automated verification, manual verification, and unverified assumptions.
-- Report failures, limitations, and environmental constraints honestly.
+* Preserve existing behavior unless the requested change intentionally alters it.
+* Add focused regression coverage for behavioral changes and bug fixes.
+* Validate changes at the appropriate layers.
+* Run the repository checks relevant to the work.
+* Verify formatting, linting, compilation, static analysis, and tests as applicable.
+* For user-interface changes, verify the actual application behavior and appearance.
+* Document durable architectural decisions when they are not obvious from the code.
+* Keep documentation synchronized with implemented behavior.
+* Do not claim that something was tested when it was not.
+* Clearly distinguish between automated verification, manual verification, and unverified assumptions.
+* Report failures, limitations, and environmental constraints honestly.
 
 A change is complete when it is:
 
-- Correctly implemented
-- Properly integrated
-- Appropriately reusable
-- Well structured
-- Sufficiently tested
-- Manually verified where useful
-- Documented where necessary
-- Free from unnecessary complexity
+* Correctly implemented
+* Properly integrated
+* Appropriately reusable
+* Well structured
+* Sufficiently tested
+* Manually verified where useful
+* Documented where necessary
+* Free from unnecessary complexity
 
 Improvement should be deliberate rather than churn.
 
