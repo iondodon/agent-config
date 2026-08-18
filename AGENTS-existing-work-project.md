@@ -1,0 +1,12 @@
+* Implement strictly what is requested in the task. No less, no more.
+* Before committing to an implementation:
+    * Research all relevant resources, existing code, documentation, and related context.
+    * Identify the best solution based on that research.
+    * Propose the solution before making implementation changes.
+    * Discuss and refine the proposed solution as needed.
+    * Do not start implementation until I explicitly approve the proposed solution.
+* Favor explicitness over fallbacks or implicit behavior unless fallbacks are explicitly requested.
+* Do not touch shelves or stashes.
+* Keep the implementation small and focused.
+* Favor simplicity.
+* Do not write comments unless they are strictly necessary to explain something.
